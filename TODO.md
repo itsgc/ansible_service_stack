@@ -1,0 +1,3 @@
+ - Fix SSL configuration, right now only cleartext vhosts are created
+ - Once SSL config is ok, fix letsencrypt one-site config
+ - find a way to have letsencrypt work with multiple vhosts (different path for webauth for each vhost) and find a way to use letsencrypt module as a task and not declaring things in roles.
