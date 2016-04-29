@@ -1,0 +1,7 @@
+{% for vhost in vhosts %}
+    - servername: "{{ vhost }}"
+      documentroot: "/var/www/{{ vhost }}/public"
+      extra_parameters: |
+        RewriteEngine on
+        RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R=301,L]
+{% endfor %}
