@@ -1,0 +1,15 @@
+ - hosts: vagrant 
+   become: yes
+   vars_files:
+       - vars/vhosts.yml  
+   tasks:
+      - name: Create certs directory
+        file: path=/etc/apache2/certs state=directory owner=www-data group=www-data mode=0775 recurse=yes
+      - name: Copying over ssl cert
+        copy: src="certs/{{ item }}.crt" dest="/etc/apache2/certs/{{ item }}.crt" owner=www-data group=www-data mode=0775
+        with_items:
+            - "{{ vhosts }}"
+      - name: Copying over ssl cert key
+        copy: src="certs/{{ item }}.key" dest="/etc/apache2/certs/{{ item }}.key" owner=www-data group=www-data mode=0775
+        with_items:
+            - "{{ vhosts }}"

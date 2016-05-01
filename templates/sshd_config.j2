@@ -1,0 +1,59 @@
+Port 22
+Protocol 2
+AddressFamily inet
+ClientAliveInterval 900
+ClientAliveCountMax 0
+
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+UsePrivilegeSeparation yes
+
+ReKeyLimit  256M
+KeyRegenerationInterval 3600
+ServerKeyBits 2048
+MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-96-etm@openssh.com
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+AllowUsers {% for user in allowed_ssh_users %}{{ user }} {% endfor %}
+
+
+SyslogFacility AUTH
+LogLevel INFO
+
+LoginGraceTime 30
+MaxAuthTries 3
+PermitRootLogin no
+PermitUserEnvironment no
+StrictModes yes
+AllowTcpForwarding no
+AllowAgentForwarding no
+
+MaxStartups 2
+MaxSessions 3
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+
+IgnoreRhosts yes
+GatewayPorts no
+IgnoreUserKnownHosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+
+PermitEmptyPasswords no
+
+ChallengeResponseAuthentication no
+
+PasswordAuthentication yes
+
+X11Forwarding no
+PrintMotd no
+PrintLastLog no
+TCPKeepAlive yes
+
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes

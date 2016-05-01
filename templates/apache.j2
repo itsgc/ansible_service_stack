@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerName {{ item.servername }}
+    DocumentRoot /var/www/{{ item.documentrootdir }}/public
+    ServerAdmin {{ item.serveradmin }}
+    ErrorLog logs/{{ item.errorlog }}-error_log
+    CustomLog logs/{{ item.customlog }}-access_log common
+
+    <Directory /var/www/{{ item.documentrootdir }}/public>
+        Options None
+    </Directory>
+
+{% include "files/apache/mod_rewrite/" + item.documentrootdir + ".conf" ignore missing %}
+
+</VirtualHost>
